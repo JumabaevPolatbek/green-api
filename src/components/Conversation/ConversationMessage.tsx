@@ -3,7 +3,7 @@ import React from 'react';
 const ConversationMessage = () => {
 	return (
 		<div
-			className='row message'
+			className='d-flex flex-column message'
 			id='conversation'
 		>
 			<div className='row message-previous'>
