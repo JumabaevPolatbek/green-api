@@ -16,9 +16,12 @@ export const accountDetail = createApi({
 	}),
 	tagTypes: ['getContacts', 'getContactInfo'],
 	endpoints: (build) => ({
-		getDetail: build.query<any, IAccountInstance>({
-			query: (account) =>
-				`waInstance${account.IdInstance}/getStateInstance/${account.ApiTokenInstance}`,
+		getDetail: build.query<
+			any,
+			{ idInstance?: string; apiTokenInstance?: string }
+		>({
+			query: ({ idInstance, apiTokenInstance }) =>
+				`waInstance${idInstance}/getStateInstance/${apiTokenInstance}`,
 		}),
 		checkNumber: build.query<
 			{ existsWhatsapp: boolean },
@@ -64,3 +67,5 @@ export const accountDetail = createApi({
 		}),
 	}),
 });
+
+export const { useGetDetailQuery } = accountDetail;
