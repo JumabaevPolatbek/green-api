@@ -24,23 +24,43 @@ export const authOptions: NextAuthOptions = {
 					type: 'password',
 				},
 			},
-			async authorize(credentials, req) {
-				const { username, password } =
-					credentials as {
-						username: string;
-						password: string;
+			authorize: async (credentials) => {
+				const { idInstance, apiTokenInstance } =
+					credentials as any;
+				const res = await fetch(
+					`https://api.green-api.com/waInstance${idInstance}/getStateInstance/${apiTokenInstance}`
+				);
+				const data = await res.json();
+				// const user = {
+				// 	idInstance: credentials?.username,
+				// 	apiTokenInstance: credentials?.password,
+				// };
+				console.log(data);
+				console.log(idInstance);
+				if (data.stateInstance === 'authorized') {
+					return {
+						id: idInstance,
+						name: apiTokenInstance,
 					};
-				const { data } = useGetDetailQuery({
-					idInstance: credentials?.username,
-					apiTokenInstance: credentials?.password,
-				});
-				// const res = await data;
-				const user = await data;
-				console.log(user);
-				if (user) {
-					return user;
-				} else return null;
+				} else {
+					return null;
+				}
+				// if (credentials?.username==='polat') {
+				// 	return {
+				// 		id:'1',
+				// 		name:'polat'
+				// 	}
+				// } else {
+				// 	return null;
+				// }
+				// if(credentials?.username==='polat' && credentials.password==='test'){
+				// 	return {
+				// 		name:'Polat',
+				// 		id:'1'
+				// 	}
+				// } else {return null}
 			},
+
 			// async authorize(credentials, req) {
 			// 	const { username, password } =
 			// 		credentials as any;

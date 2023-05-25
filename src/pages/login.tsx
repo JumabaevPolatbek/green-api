@@ -1,28 +1,34 @@
 import styles from '../styles/login.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
-import { useSession } from 'next-auth/react';
-import { FormEvent } from 'react';
-import { useGetDetailQuery } from '@/store/api/account';
 type Form = {
 	idInstance: string;
 	apiTokenInstance: string;
 };
 export default function () {
-	const session = useSession();
-	const { handleSubmit, register } = useForm<Form>();
+	const router = useRouter();
+	const { handleSubmit, register, formState } =
+		useForm<Form>();
 	const btnSubmit: SubmitHandler<Form> = async (data) => {
 		// const res = await fetch(
 		// 	`https://api.green-api.com/waInstance${data.idInstance}/getStateInstance/${data.apiTokenInstance}`
 		// );
-		// console.log(await res.json());
-		await console.log(signIn('credentials'));
+
+		// const dataPerson = await res.json();
+		// if (dataPerson.stateInstance === 'authorized') {
+		// 	process.env.ID_INSTANCE = dataPerson.idInstance;
+		// 	process.env.API_TOKEN_INSTANCE =
+		// 		dataPerson.apiTokenInstance;
+		// 	router.push('/');
+		// }
+		await signIn('credentials', {
+			idInstance: data.idInstance,
+			apiTokenInstance: data.apiTokenInstance,
+			callbackUrl: '/',
+		});
 	};
-	const btSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		setTimeout(() => signIn('credentials'), 3000);
-	};
-	console.log(session);
+
 	return (
 		<div className={styles['container']}>
 			<div className={styles['screen']}>
