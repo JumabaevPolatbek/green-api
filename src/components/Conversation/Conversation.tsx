@@ -12,27 +12,27 @@ const Conversation: React.FC<{ contact: IContact }> = ({
 		[] as IGetChatHistory[]
 	);
 	const session = useSession();
-	React.useEffect(() => {
-		const body = {
-			chatId: contact.id,
-			count: 10,
-		};
-		if (session.data?.user?.email) {
-			const res = fetch(
-				`https://api.green-api.com/waInstance${session.data?.user?.email}/getChatHistory/${session.data?.user?.name}
-	`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'Application/JSON',
-					},
-					body: JSON.stringify(body),
-				}
-			)
-				.then((res) => res.json())
-				.then((json) => setHistory(json));
-		}
-	}, []);
+	// React.useEffect(() => {
+	// 	const body = {
+	// 		chatId: contact.id,
+	// 		count: 10,
+	// 	};
+	// 	if (session.data?.user?.email) {
+	// 		const res = fetch(
+	// 			`https://api.green-api.com/waInstance${session.data?.user?.email}/getChatHistory/${session.data?.user?.name}
+	// `,
+	// 			{
+	// 				method: 'POST',
+	// 				headers: {
+	// 					'Content-Type': 'Application/JSON',
+	// 				},
+	// 				body: JSON.stringify(body),
+	// 			}
+	// 		)
+	// 			.then((res) => res.json())
+	// 			.then((json) => setHistory(json));
+	// 	}
+	// }, []);
 	// console.log(history);
 	return (
 		<div className={`col-sm-8 conversation`}>
