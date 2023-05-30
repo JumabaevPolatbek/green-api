@@ -3,6 +3,7 @@ import {
 	fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import {
+	Avatar,
 	IAccountInstance,
 	IContact,
 	IDetailContact,
@@ -18,7 +19,10 @@ export const accountDetail = createApi({
 	endpoints: (build) => ({
 		getDetail: build.query<
 			any,
-			{ idInstance?: string; apiTokenInstance?: string }
+			{
+				idInstance?: string;
+				apiTokenInstance?: string;
+			}
 		>({
 			query: ({ idInstance, apiTokenInstance }) =>
 				`waInstance${idInstance}/getStateInstance/${apiTokenInstance}`,

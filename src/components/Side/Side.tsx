@@ -1,12 +1,19 @@
+import { IContact } from '@/store/models/account';
 import React from 'react';
 import SearchBox from '../SearchBox/SearchBox';
 import SideBar from '../SideBar/SideBar';
 import SideTwo from '../SideTwo/SideTwo';
-const Side = () => {
+type Props = {
+	contacts: IContact[];
+	setId: React.Dispatch<React.SetStateAction<IContact>>;
+};
+const Side: React.FC<Props> = ({ contacts, setId }) => {
 	const [left, setLeft] = React.useState<number>(-100);
 	const handleClick = () => {
 		setLeft(0);
 	};
+	const [searchValue, setSearchValue] =
+		React.useState<string>('');
 	return (
 		<>
 			<div className={`col-sm-4 side`}>
@@ -41,8 +48,14 @@ const Side = () => {
 							></i>
 						</div>
 					</div>
-					<SearchBox />
-					<SideBar name='sideBar' />
+					<SearchBox
+						setSearchValue={setSearchValue}
+					/>
+					<SideBar
+						name='sideBar'
+						contacts={contacts}
+						setId={setId}
+					/>
 				</div>
 				<SideTwo
 					left={left}

@@ -8,13 +8,13 @@ const ConversationMessage = () => {
 		>
 			<div className='row message-previous'>
 				<div className='col-sm-12 previous'>
-					<a
+					{/* <a
 						// onclick='previous(this)'
 						id='ankitjain28'
 						// name='20'
 					>
 						Show Previous Message!
-					</a>
+					</a> */}
 				</div>
 			</div>
 

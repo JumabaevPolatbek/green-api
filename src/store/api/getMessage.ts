@@ -16,34 +16,43 @@ export const getMessage = createApi({
 	}),
 	tagTypes: ['getChatHistory'],
 	endpoints: (build) => ({
-		getHistory: build.query<
+		getHistory: build.mutation<
 			IGetChatHistory[],
 			{
-				Account: IAccountInstance;
-				body: IGetChatHistory;
+				account: {
+					idInstance?: string | null;
+					apiTokenInstance?: string | null;
+				};
+				chatId: string;
 			}
 		>({
-			query: ({ Account, body }) => {
+			query: ({ account, chatId }) => {
 				return {
-					url: `/waInstance${Account.IdInstance}/getChatHistory/${Account.ApiTokenInstance}`,
+					url: `/waInstance${account?.idInstance}/getChatHistory/${account?.apiTokenInstance}`,
 					headers: {
 						'Content-type': 'Application/json',
 					},
-					body,
+					body: ({
+						chatId: chatId,
+						count: 10,
+					}),
 				};
 			},
-			providesTags: ['getChatHistory'],
+			// invalidatesTags: ['getChatHistory'],
 		}),
 		sendMessage: build.mutation<
 			{ idMessage: string },
 			{
-				account: IAccountInstance;
+				account?: {
+					idInstance?: string | null;
+					apiTokenInstance?: string | null;
+				};
 				body: ISendMessage;
 			}
 		>({
 			query: ({ account, body }) => {
 				return {
-					url: `waInstance${account.IdInstance}/sendMessage/${account.ApiTokenInstance}`,
+					url: `waInstance${account?.idInstance}/sendMessage/${account?.apiTokenInstance}`,
 					headers: {
 						'Content-type': 'Application/json',
 					},
@@ -55,6 +64,6 @@ export const getMessage = createApi({
 });
 
 export const {
-	useGetHistoryQuery,
+	useGetHistoryMutation,
 	useSendMessageMutation,
 } = getMessage;

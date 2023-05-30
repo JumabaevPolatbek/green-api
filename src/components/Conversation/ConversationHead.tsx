@@ -1,6 +1,8 @@
 import React from 'react';
 
-const ConversationHead = () => {
+const ConversationHead: React.FC<{ name: string }> = ({
+	name,
+}) => {
 	return (
 		<div className={`row heading`}>
 			<div
@@ -14,11 +16,11 @@ const ConversationHead = () => {
 				className={`col-sm-8 col-xs-7 heading-name`}
 			>
 				<a className={'heading-name-meta'}>
-					John Doe
+					{name}
 				</a>
-				<span className={'heading-online'}>
+				{/* <span className={'heading-online'}>
 					Online
-				</span>
+				</span> */}
 			</div>
 			<div
 				className={`col-sm-1 col-xs-1  heading-dot pull-right`}

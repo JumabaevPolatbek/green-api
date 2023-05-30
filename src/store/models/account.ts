@@ -72,3 +72,7 @@ export interface ImageUrls {
 export interface ReviewStatus {
 	whatsapp: string;
 }
+export interface Avatar {
+	existsWhatsapp: boolean;
+	urlAvatar: string;
+}

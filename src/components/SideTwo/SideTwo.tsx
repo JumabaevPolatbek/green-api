@@ -32,7 +32,7 @@ const SideTwo: React.FC<Props> = ({ left, setLeft }) => {
 			</div>
 
 			<ComposeBox />
-			<SideBar name='compose-sideBar'/>
+			{/* <SideBar name='compose-sideBar' /> */}
 		</div>
 	);
 };

@@ -1,8 +1,33 @@
+import { useGetHistoryMutation } from '@/store/api/getMessage';
+import { IContact } from '@/store/models/account';
+import { useSession } from 'next-auth/react';
 import React from 'react';
-
-const SideBarItem = () => {
+type Props = {
+	contact: IContact;
+	setId: React.Dispatch<React.SetStateAction<IContact>>;
+};
+const SideBarItem: React.FC<Props> = ({
+	contact,
+	setId,
+}) => {
+	const session = useSession();
+	const [getHistory, result] = useGetHistoryMutation();
+	const handleClick = () => {
+		setId(contact);
+		getHistory({
+			account: {
+				idInstance: session.data?.user?.email,
+				apiTokenInstance: session.data?.user?.name,
+			},
+			chatId: contact.id,
+		});
+	};
+	// console.log('Result',result);
 	return (
-		<div className={`row sideBar-body`}>
+		<div
+			className={`row sideBar-body`}
+			onClick={handleClick}
+		>
 			<div
 				className={`col-sm-3 col-xs-3 sideBar-avatar`}
 			>
@@ -18,7 +43,7 @@ const SideBarItem = () => {
 						className={`col-sm-8 col-xs-8 sideBar-name`}
 					>
 						<span className={'name-meta'}>
-							John Doe
+							{contact.name}
 						</span>
 					</div>
 					<div
@@ -27,7 +52,11 @@ const SideBarItem = () => {
 						<span
 							className={`time-meta pull-right'`}
 						>
-							18:18
+							+
+							{contact.id.replace(
+								'@c.us',
+								''
+							)}
 						</span>
 					</div>
 				</div>
