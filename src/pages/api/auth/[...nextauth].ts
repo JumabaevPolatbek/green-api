@@ -8,12 +8,12 @@ export const authOptions: NextAuthOptions = {
 		CredentialsProvider({
 			name: 'Credentials',
 			credentials: {
-				username: {
+				idInstance: {
 					label: 'idInstance',
 					type: 'text',
-					placeholder: 'jsmith',
+					placeholder: 'Id Instance',
 				},
-				password: {
+				apiTokenInstance: {
 					label: 'ApiTokenInstance',
 					type: 'password',
 				},
@@ -24,15 +24,9 @@ export const authOptions: NextAuthOptions = {
 				const res = await fetch(
 					`https://api.green-api.com/waInstance${idInstance}/getStateInstance/${apiTokenInstance}`
 				);
-				const data = await res.json();
-
-				if (res.ok && data) {
-					return {
-						id: idInstance,
-						name: apiTokenInstance,
-						email: idInstance,
-						image: data.stateInstance,
-					};
+				const user = await res.json();
+				if (res.ok && user) {
+					return user;
 				} else {
 					return null;
 				}
@@ -42,28 +36,16 @@ export const authOptions: NextAuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 
 	callbacks: {
-		// async jwt({ token, user }) {
-		//   return { ...user };
-		// },
-		// async session({ session, user }) {
-		// 	session.user.apiTokenInstance = user.name;
-		// 	session.user.idInstance = user.email;
-		// 	session.user.statusInstance = user.image;
-		// 	return session;
-		// },
+		async jwt({ token, user }) {
+			return { ...user, ...token };
+		},
+		async session({ session, user, token }) {
+			session.user.apiTokenInstance = token.name;
+			session.user.idInstance = token.email;
+			session.user.statusInstance = token.image;
+			return session;
+		},
 		async signIn({ credentials, user }) {
-			// const { idInstance, apiTokenInstance } =
-			// 	credentials as any;
-			// const res = await fetch(
-			// 	`https://api.green-api.com/waInstance${idInstance}/getStateInstance/${apiTokenInstance}`
-			// );
-			// const data = await res.json();
-			// if (data.stateInstance === 'authorized') {
-			// 	return true;
-			// } else {
-			// 	return false;
-			// }
-			console.log(user);
 			if (user.image === 'authorized') {
 				return true;
 			} else {
