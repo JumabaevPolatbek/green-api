@@ -5,7 +5,7 @@ type Form = {
 	idInstance: string;
 	apiTokenInstance: string;
 };
-export default function () {
+export default function Page() {
 	const { handleSubmit, register } = useForm<Form>();
 	const btnSubmit: SubmitHandler<Form> = async (data) => {
 		await signIn('credentials', {
