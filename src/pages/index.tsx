@@ -13,7 +13,7 @@ import Side from '../components/Side/Side';
 import { IContact } from '../store/models/account';
 type Props = {
 	contacts: IContact[];
-	history:IGetChatHistory[]
+	history: IGetChatHistory[];
 };
 
 // export const getServerSideProps: GetServerSideProps<{
@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps<Props> =
 			};
 		}
 	});
-const Page:NextPage<Props>=({contacts})=> {
+const Page: NextPage<Props> = ({ contacts }) => {
 	console.log('contacts', contacts);
 	// console.log('history', history);
 	return (
@@ -114,13 +114,13 @@ const Page:NextPage<Props>=({contacts})=> {
 					Log out
 				</button> */}
 				<div className={`row app-one`}>
-					{/* <Side contacts={contacts} /> */}
-					{/* <Conversation /> */}
+					<Side contacts={contacts} />
+					<Conversation />
 				</div>
 			</div>
 		</>
 	);
-}
+};
 // Page.getInitialProps = wrapper.getInitialAppProps(
 // 	(store) => (ctx) => {
 // 		const { req, pathname } = ctx;
