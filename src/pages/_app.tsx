@@ -30,9 +30,7 @@ function App({ Component, pageProps }: AppProps) {
 				crossOrigin={'anonymous'}
 			/>
 			<SessionProvider session={pageProps.session}>
-				<Provider store={store}>
-					<Component {...pageProps} />
-				</Provider>
+				<Component {...pageProps} />
 			</SessionProvider>
 		</>
 	);

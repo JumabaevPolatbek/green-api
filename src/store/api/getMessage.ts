@@ -23,19 +23,20 @@ export const getMessage = createApi({
 					idInstance?: string | null;
 					apiTokenInstance?: string | null;
 				};
-				chatId: string;
+				body: {
+					chatId: string;
+					count: 10;
+				};
 			}
 		>({
-			query: ({ account, chatId }) => {
+			query: ({ account, body }) => {
 				return {
 					url: `/waInstance${account?.idInstance}/getChatHistory/${account?.apiTokenInstance}`,
+					method: 'POST',
 					headers: {
 						'Content-type': 'Application/json',
 					},
-					body: ({
-						chatId: chatId,
-						count: 10,
-					}),
+					body: body,
 				};
 			},
 			// invalidatesTags: ['getChatHistory'],

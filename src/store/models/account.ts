@@ -27,8 +27,8 @@ export interface IGetStatusInstance {
 }
 
 export interface IAccountInstance {
-	IdInstance: number;
-	ApiTokenInstance: string;
+	IdInstance: string | null | undefined;
+	ApiTokenInstance: string | null | undefined;
 }
 export interface IContact {
 	id: string;

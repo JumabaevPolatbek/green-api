@@ -1,8 +1,40 @@
+import { useGetHistoryMutation } from '@/store/api/getMessage';
+import {
+	useAppDispatch,
+	useAppSelector,
+} from '@/store/hook';
+import { setHistory } from '@/store/slices/history';
+import { useSession } from 'next-auth/react';
 import React from 'react';
 
-const ConversationHead: React.FC<{ name: string }> = ({
-	name,
-}) => {
+// const getChatHistory = async (
+// 	idInstance: string | null | undefined,
+// 	apiTokenInstance: string | null | undefined
+// ) => {
+// 	const res = await fetch(
+// 		`https://api.green-api.com/waInstance${idInstance}/getChatHistory/${apiTokenInstance}`
+// 	);
+// 	const data = await res.json();
+// 	return data;
+// };
+
+const ConversationHead: React.FC = () => {
+	const { data: contact } = useAppSelector(
+		(state) => state.contact
+	);
+	const { data: session } = useSession();
+	const dispatch = useAppDispatch();
+	React.useEffect(() => {
+		if (session?.user) {
+			console.log(session.user);
+			fetch(
+				`https://api.green-api.com/waInstance${session.user.idInstance}/getChatHistory/${session.user.apiTokenInstance}`
+			)
+				.then((res) => res.json())
+				.then((json) => dispatch(setHistory(json)));
+		}
+	}, []);
+	// console.log(result);
 	return (
 		<div className={`row heading`}>
 			<div
@@ -16,7 +48,7 @@ const ConversationHead: React.FC<{ name: string }> = ({
 				className={`col-sm-8 col-xs-7 heading-name`}
 			>
 				<a className={'heading-name-meta'}>
-					{name}
+					{contact.name}
 				</a>
 				{/* <span className={'heading-online'}>
 					Online

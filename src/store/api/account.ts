@@ -72,4 +72,5 @@ export const accountDetail = createApi({
 	}),
 });
 
-export const { useGetDetailQuery } = accountDetail;
+export const { useGetDetailQuery, useGetContactsQuery } =
+	accountDetail;

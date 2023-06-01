@@ -1,28 +1,35 @@
 import { useGetHistoryMutation } from '@/store/api/getMessage';
+import {
+	useAppDispatch,
+	useAppSelector,
+} from '@/store/hook';
 import { IContact } from '@/store/models/account';
+import { setContact } from '@/store/slices/contact';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 type Props = {
 	contact: IContact;
-	setId: React.Dispatch<React.SetStateAction<IContact>>;
 };
-const SideBarItem: React.FC<Props> = ({
-	contact,
-	setId,
-}) => {
+const SideBarItem: React.FC<Props> = ({ contact }) => {
 	const session = useSession();
+	const dispatch = useAppDispatch();
+	const state = useAppSelector((state) => state.contact);
 	const [getHistory, result] = useGetHistoryMutation();
-	const handleClick = () => {
-		setId(contact);
-		getHistory({
+	const handleClick = async () => {
+		await getHistory({
 			account: {
-				idInstance: session.data?.user?.email,
-				apiTokenInstance: session.data?.user?.name,
+				idInstance: session.data?.user.idInstance,
+				apiTokenInstance:
+					session.data?.user.apiTokenInstance,
 			},
-			chatId: contact.id,
+			body: {
+				chatId: contact.id,
+				count: 10,
+			},
 		});
+		console.log(await dispatch(setContact(contact)));
 	};
-	// console.log('Result',result);
+	// console.log(state);
 	return (
 		<div
 			className={`row sideBar-body`}

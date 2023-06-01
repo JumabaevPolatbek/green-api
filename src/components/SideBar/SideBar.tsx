@@ -5,13 +5,11 @@ import SideBarItem from './SideBarItem';
 type Props = {
 	name: 'sideBar' | 'compose-sideBar';
 	contacts?: IContact[];
-	setId: React.Dispatch<React.SetStateAction<IContact>>;
 };
 
 const SideBar: React.FC<Props> = ({
 	name,
 	contacts,
-	setId,
 }) => {
 	return (
 		<div className={`row ${name}`}>
@@ -19,7 +17,6 @@ const SideBar: React.FC<Props> = ({
 				<SideBarItem
 					key={contact.id}
 					contact={contact}
-					setId={setId}
 				/>
 			))}
 		</div>
