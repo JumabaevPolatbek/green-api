@@ -6,6 +6,7 @@ import {
 import { setHistory } from '@/store/slices/history';
 import { useSession } from 'next-auth/react';
 import React from 'react';
+import Image from 'next/image';
 
 // const getChatHistory = async (
 // 	idInstance: string | null | undefined,
@@ -23,25 +24,28 @@ const ConversationHead: React.FC = () => {
 		(state) => state.contact
 	);
 	const { data: session } = useSession();
-	const dispatch = useAppDispatch();
-	React.useEffect(() => {
-		if (session?.user) {
-			console.log(session.user);
-			fetch(
-				`https://api.green-api.com/waInstance${session.user.idInstance}/getChatHistory/${session.user.apiTokenInstance}`
-			)
-				.then((res) => res.json())
-				.then((json) => dispatch(setHistory(json)));
-		}
-	}, []);
-	// console.log(result);
+	// const dispatch = useAppDispatch();
+	// React.useEffect(() => {
+	// 	if (session?.user) {
+	// 		console.log(session.user);
+	// 		fetch(
+	// 			`https://api.green-api.com/waInstance${session.user.idInstance}/getChatHistory/${session.user.apiTokenInstance}`
+	// 		)
+	// 			.then((res) => res.json())
+	// 			.then((json) => dispatch(setHistory(json)));
+	// 	}
+	// }, []);
+	// // console.log(result);
 	return (
 		<div className={`row heading`}>
 			<div
 				className={`col-sm-2 col-md-1 col-xs-3 heading-avatar`}
 			>
 				<div className={'heading-avatar-icon'}>
-					<img src='https://bootdey.com/img/Content/avatar/avatar6.png' />
+					<Image
+						src='https://bootdey.com/img/Content/avatar/avatar6.png'
+						alt='avatar'
+					/>
 				</div>
 			</div>
 			<div

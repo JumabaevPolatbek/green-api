@@ -6,6 +6,7 @@ import {
 import { IContact } from '@/store/models/account';
 import { setContact } from '@/store/slices/contact';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import React from 'react';
 type Props = {
 	contact: IContact;
@@ -42,7 +43,10 @@ const SideBarItem: React.FC<Props> = ({ contact }) => {
 				className={`col-sm-3 col-xs-3 sideBar-avatar`}
 			>
 				<div className={'avatar-icon'}>
-					<img src='https://bootdey.com/img/Content/avatar/avatar2.png' />
+					<Image
+						src='https://bootdey.com/img/Content/avatar/avatar2.png'
+						alt='avatar'
+					/>
 				</div>
 			</div>
 			<div

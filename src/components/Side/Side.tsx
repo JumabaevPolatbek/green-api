@@ -1,4 +1,5 @@
 import { IContact } from '@/store/models/account';
+import Image from 'next/image';
 import React from 'react';
 import SearchBox from '../SearchBox/SearchBox';
 import SideBar from '../SideBar/SideBar';
@@ -6,7 +7,7 @@ import SideTwo from '../SideTwo/SideTwo';
 type Props = {
 	contacts: IContact[];
 };
-const Side: React.FC<Props> = ({ contacts, setId }) => {
+const Side: React.FC<Props> = ({ contacts }) => {
 	const [left, setLeft] = React.useState<number>(-100);
 	const handleClick = () => {
 		setLeft(0);
@@ -26,7 +27,10 @@ const Side: React.FC<Props> = ({ contacts, setId }) => {
 									'heading-avatar-icon'
 								}
 							>
-								<img src='https://bootdey.com/img/Content/avatar/avatar1.png' />
+								<Image
+									src='https://bootdey.com/img/Content/avatar/avatar1.png'
+									alt='avatar'
+								/>
 							</div>
 						</div>
 						{/* <div
