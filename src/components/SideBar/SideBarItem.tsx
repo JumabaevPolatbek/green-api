@@ -15,19 +15,22 @@ const SideBarItem: React.FC<Props> = ({ contact }) => {
 	const dispatch = useAppDispatch();
 	const state = useAppSelector((state) => state.contact);
 	const [getHistory, result] = useGetHistoryMutation();
-	const handleClick = async () => {
-		await getHistory({
-			account: {
-				idInstance: session.data?.user.idInstance,
-				apiTokenInstance:
-					session.data?.user.apiTokenInstance,
-			},
-			body: {
-				chatId: contact.id,
-				count: 10,
-			},
-		});
-		console.log(await dispatch(setContact(contact)));
+	// const handleClick = async () => {
+	// 	await getHistory({
+	// 		account: {
+	// 			idInstance: session.data?.user.idInstance,
+	// 			apiTokenInstance:
+	// 				session.data?.user.apiTokenInstance,
+	// 		},
+	// 		body: {
+	// 			chatId: contact.id,
+	// 			count: 10,
+	// 		},
+	// 	});
+	// 	console.log(await dispatch(setContact(contact)));
+	// };
+	const handleClick = () => {
+		dispatch(setContact(contact));
 	};
 	// console.log(state);
 	return (

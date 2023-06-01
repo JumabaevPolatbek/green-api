@@ -37,10 +37,16 @@ export const getServerSideProps: GetServerSideProps =
 				session?.user.idInstance || '';
 			const apiTokenInstance =
 				session?.user.apiTokenInstance || '';
-			const [data, tagData] = await Promise.all([
+			const chatId = store.getState().contact.data.id;
+			const [data] = await Promise.all([
 				fetch(
 					`https://api.green-api.com/waInstance${idInstance}/getContacts/${apiTokenInstance}`
 				),
+			]);
+			// const contact = data.json()
+			// store.dispatch(setContact(contact[0]))
+			const [chat, tag] = await Promise.all([
+				data.json(),
 				fetch(
 					`https://api.green-api.com/waInstance${idInstance}/getChatHistory/${apiTokenInstance}`,
 					{
@@ -50,16 +56,14 @@ export const getServerSideProps: GetServerSideProps =
 								'Application/JSON',
 						},
 						body: JSON.stringify({
-							chatId: '998977879591@c.us',
+							chatId: chatId,
 							count: 10,
 						}),
 					}
 				),
+				,
 			]);
-			const [chat, tag] = await Promise.all([
-				data.json(),
-				tagData.json(),
-			]);
+			store.dispatch(setContact(chat[83]));
 			// const res = await fetch(
 			// 	`https://api.green-api.com/waInstance${idInstance}/getChatHistory/${apiTokenInstance}`,
 			// 	{
@@ -87,7 +91,7 @@ export const getServerSideProps: GetServerSideProps =
 			return {
 				props: {
 					contacts: chat,
-					history: tag,
+					history: await tag.json(),
 				},
 			};
 		} catch (err) {
@@ -110,7 +114,7 @@ function Page({
 					Log out
 				</button> */}
 				<div className={`row app-one`}>
-					{/* <Side contacts={contacts} /> */}
+					<Side contacts={contacts} />
 					{/* <Conversation /> */}
 				</div>
 			</div>
